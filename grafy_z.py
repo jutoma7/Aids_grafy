@@ -189,7 +189,9 @@ print("4 - przeszukiwanie w głąb")
 print("5 - sortwanie topologiczne metodą Tarjana - macierz sąsiedztwa")
 print("6 - sortowanie topologiczne metodą Tarjana - lista sąsiadów")
 print("7 - sortwanie topologiczne metodą Tarjana - tablica krawędzi")
-print("8 - sortowanie topologiczne metodą Kahna - tablica krawędzi")
+print("8 - sortowanie topologiczne metodą Kahna - macierz sąsiedztwa")
+print("9 - sortowanie topologiczne metodą Kahna - lista sąsiadów")
+print("10 - sortowanie topologiczne metodą Kahna - tablica krawędzi")
 print("-1 - koniec")
 m = int(input("podaj, które z powyższych działań chcesz wykonać:"))
 
@@ -276,18 +278,19 @@ while m >= 0:
 
     if m == 8:
         print("sortowanie topologiczne Kahn:")
-        print(kahns_topological_sort_lista_sasiadow(in_degree_tab_kraw(n)))
+        print(kahns_topological_sort_lista_sasiadow(in_degree_matrix(m_sas)))
         
     if m == 9:
             '''if len(kontrolna) != len(graph):
                 return None
             else:
                 return kontrolna'''
-
+        print("sortowanie topologiczne Kahn:")
         print(kahns_topological_sort_lista_sasiadow(in_degree_lista_sasiadow(l_sas)))
 
     if m == 10:
-        print(kahns_topological_sort_lista_sasiadow(in_degree_matrix(m_sas)))
+         print("sortowanie topologiczne Kahn:")
+         print(kahns_topological_sort_lista_sasiadow(in_degree_tab_kraw(n)))
 
             
     m = int(input('podaj dalsze działanie:'))
