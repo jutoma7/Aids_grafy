@@ -10,6 +10,8 @@ print("7 - sortwanie topologiczne metodą Tarjana - tablica krawędzi")
 print("-1 - koniec")
 m=int(input("podaj, które z powyższych działań chcesz wykonać:"))
 while m>=0:
+
+    
     if m==0:
         def macierz_sasiedztwa(n):
             m_sas=[]
@@ -30,6 +32,8 @@ while m>=0:
             return m_sas
         m_sas=macierz_sasiedztwa(n)
         print(m_sas)
+
+    
     if m==1:
         import random
         def m_sasiedztwa_los(n):
@@ -53,6 +57,8 @@ while m>=0:
             for j in range(n):
                 print(m_sas_los[i][j], end="  ")
             print()
+
+    
     if m==2:
         l_sas={}
         def lista_sasiadow(n):
@@ -69,6 +75,8 @@ while m>=0:
             return l_sas
 
         l_sas=lista_sasiadow(n)
+
+    
     if m==3:
         def tablica_krawedzi(n):
             tab_kraw=[]
@@ -84,6 +92,8 @@ while m>=0:
 
         tab_kraw=tablica_krawedzi(n)
         print(tab_kraw)
+
+    
     if m==4:
         visited=[]
         print()
@@ -99,6 +109,8 @@ while m>=0:
 
         print("wyszukiwanie w głąb:")
         DFS(visited,tab_kraw,tab_kraw[0][0])
+
+    
     if m==5: #matrix
         def tarjan_topological_sort_matrix(matrix):
             def tarjan(u, graph, visited, stack):
@@ -132,6 +144,8 @@ while m>=0:
             print("sortoanie topologiczne Tarjan:")
             for line in wynik:
                 print(int(line) + 1)
+
+    
     if m==6:
         def topological_sort_tarjan_l_sas(graph):
             visited = set()
@@ -170,6 +184,8 @@ while m>=0:
         print("sortowanie topologiczne Tarjan:")
         for line in wynik:
             print(line)
+
+    
     if m==7:
         def tarjan_topological_sort_edges(edge_list):
             graph = {}
@@ -199,32 +215,6 @@ while m>=0:
         print("sortowanie topologiczne metodą Tarjana:")
         for line in wynik:
             print(line)
-    if m==8:
-        from collections import defaultdict
-
-        def tarjan_topological_sort(edge_list):
-            graph = defaultdict(list)
-            for u, v in edge_list:
-                graph[u].append(v)
-
-            def tarjan(u):
-                visited[u] = True
-                for v in graph.get(u, []):
-                    if not visited[v]:
-                        tarjan(v)
-                stack.append(u)
-
-            visited = {}
-            stack = []
-
-            for u in graph.keys():
-                if u not in visited:
-                    tarjan(u)
-
-            return stack[::-1]
-
-        topological_order = tarjan_topological_sort(tab_kraw)
-        print("Topological order:", topological_order)
-
+  
     m=int(input('podaj dalsze działanie:'))
 
