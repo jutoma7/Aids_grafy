@@ -3,6 +3,25 @@ from collections import defaultdict
 from collections import deque
 import random
 
+def macierz_losowa(n):
+    matrix = ['0']*n
+    len_list = (n*n - n) // 2
+    half = len_list // 2
+    if len_list % 2 == 1:
+        lista = ['0'] * half + ['1'] * half + ['0']
+    else:
+        lista = ['0'] * half + ['1'] * half
+    random.shuffle(lista)
+    a = 0
+    for i in range(n):
+        matrix[i] = ['0'] * (i+1)
+        for j in range(n-i-1):
+            matrix[i].append(lista[a])
+            a +=1
+
+    return matrix
+
+
 def macierz_sasiedztwa(n):
     m_sas=[]
     print("podaj kolejne wiersze macierzy sąsiedztwa:")
@@ -20,17 +39,6 @@ def macierz_sasiedztwa(n):
             print(m_sas[i][j],end="  ")
         print()
     return m_sas
-
-def m_sasiedztwa_los(n):
-    m_sas_los=[]
-    for i in range(n):
-        lista=[]
-        for j in range(i+1):
-            lista.append('0')
-        for j in range(n-(i+1)):
-            lista.append(str(random.randint(0,1)))
-        m_sas_los.append(lista)
-    return m_sas_los
 
 def tablica_krawedzi(n):
     tab_kraw=[]
@@ -132,6 +140,8 @@ def Kahn(adj, V):
 sys.setrecursionlimit(10**7)
 
 n = int(input())
+
+matrix_losowy = macierz_losowa(n)
 
 m_sas=macierz_sasiedztwa(n)
 tab_kraw=tablica_krawedzi(n)
