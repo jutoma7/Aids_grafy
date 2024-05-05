@@ -1,87 +1,96 @@
 import random
 
+
 def macierz_sasiedztwa(n):
-    m_sas=[]
+    m_sas = []
     print("podaj kolejne wiersze macierzy sąsiedztwa:")
     for i in range(n):
-        m=input().split()
+        m = input().split()
         m_sas.append(m)
     print("macierz sąsiedztwa: ")
     print(end="   ")
     for i in range(n):
-        print(f"{i+1}:",end=" ")
+        print(f"{i + 1}:", end=" ")
     print()
     for i in range(n):
-        print(f"{i+1}:",end=" ")
+        print(f"{i + 1}:", end=" ")
         for j in range(n):
-            print(m_sas[i][j],end="  ")
+            print(m_sas[i][j], end="  ")
         print()
     return m_sas
-    
+
+
 def m_sasiedztwa_los(n):
-    m_sas_los=[]
+    m_sas_los = []
     for i in range(n):
-        lista=[]
-        for j in range(i+1):
+        lista = []
+        for j in range(i + 1):
             lista.append('0')
-        for j in range(n-(i+1)):
-            lista.append(str(random.randint(0,1)))
+        for j in range(n - (i + 1)):
+            lista.append(str(random.randint(0, 1)))
         m_sas_los.append(lista)
     return m_sas_los
 
- def lista_sasiadow(n):
-    l_sas={}
+
+def lista_sasiadow(n):
+    l_sas = {}
     for i in range(n):
-        sasiedzi=[]
+        sasiedzi = []
         for j in range(n):
-            if m_sas[i][j]=='1':
-                sasiedzi.append(j+1)
-        l_sas[f"{i+1}"]=sasiedzi
+            if m_sas[i][j] == '1':
+                sasiedzi.append(j + 1)
+        l_sas[f"{i + 1}"] = sasiedzi
     print("lista sąsiadów:")
     for key, value in l_sas.items():
         print(key, ":", value)
     return l_sas
 
+
 def tablica_krawedzi(n):
-    tab_kraw=[]
+    tab_kraw = []
     for i in range(n):
         for j in range(n):
-            if m_sas[i][j]=='1':
-                tab_kraw.append((i+1,j+1))
+            if m_sas[i][j] == '1':
+                tab_kraw.append((i + 1, j + 1))
     print("tablica krawędzi: ")
     print("  out | in ")
     for i in range(len(tab_kraw)):
-        print(f"{chr(ord('a')+i)}: {tab_kraw[i][0]}  |  {tab_kraw[i][1]}")
+        print(f"{chr(ord('a') + i)}: {tab_kraw[i][0]}  |  {tab_kraw[i][1]}")
     return tab_kraw
 
-def DFS(visited,tab_kraw,current):
+
+def DFS(visited, tab_kraw, current):
     if current not in visited:
         visited.append(current)
         print(current)
     for line in tab_kraw:
-        if line[0]==current and line[1] not in visited:
-            DFS(visited,tab_kraw,line[1])
+        if line[0] == current and line[1] not in visited:
+            DFS(visited, tab_kraw, line[1])
         if line[0] not in visited:
             DFS(visited, tab_kraw, line[0])
 
- def tarjan_topological_sort_matrix(matrix):
+
+def tarjan_topological_sort_matrix(matrix):
     def tarjan(u, graph, visited, stack):
         visited[u] = True
         for v in range(len(graph)):
             if matrix[u][v] == 1 and not visited[v]:
                 tarjan(v, graph, visited, stack)
         stack.append(u)
+
     n = len(matrix)
     visited = [False] * n
     stack = []
     for i in range(n):
         if not visited[i]:
             tarjan(i, matrix, visited, stack)
-    return stack[::-1]
+    return stack
 
- def topological_sort_tarjan_l_sas(graph):
+
+def topological_sort_tarjan_l_sas(graph):
     visited = set()
     stack = []
+
     def dfs(node):
         visited.add(node)
         for neighbor in graph.get(node, []):
@@ -92,13 +101,14 @@ def DFS(visited,tab_kraw,current):
     for node in graph.keys():
         if node not in visited:
             dfs(node)
-    ost=[]
+    ost = []
     for i in stack:
-        if type(i)==str:
+        if type(i) == str:
             ost.append(i)
     return ost
 
- def tarjan_topological_sort_edges(edge_list):
+
+def tarjan_topological_sort_edges(edge_list):
     graph = {}
     for u, v in edge_list:
         if u not in graph:
@@ -123,7 +133,8 @@ def DFS(visited,tab_kraw,current):
             dfs(node)
     return stack[::-1]
 
-n=int(input("podaj liczbę wierzchołków grafu: "))
+
+n = int(input("podaj liczbę wierzchołków grafu: "))
 print("0 - macierz sąsiedztwa")
 print("1 - losowa macierz sąsiedztwa")
 print("2 - lista sąsiadów")
@@ -133,13 +144,16 @@ print("5 - sortwanie topologiczne metodą Tarjana - macierz sąsiedztwa")
 print("6 - sortowanie topologiczne metodą Tarjana - lista sąsiadów")
 print("7 - sortwanie topologiczne metodą Tarjana - tablica krawędzi")
 print("-1 - koniec")
-m=int(input("podaj, które z powyższych działań chcesz wykonać:"))
-while m>=0:
-    if m==0:
-        m_sas=macierz_sasiedztwa(n)
+m = int(input("podaj, które z powyższych działań chcesz wykonać:"))
+
+while m >= 0:
+    
+    if m == 0:
+        m_sas = macierz_sasiedztwa(n)
         print(m_sas)
-    if m==1:
-        m_sas_los=m_sasiedztwa_los(n)
+        
+    if m == 1:
+        m_sas_los = m_sasiedztwa_los(n)
         print("losowa macierz sasiedztwa:")
         print(end="  ")
         for i in range(n):
@@ -150,59 +164,68 @@ while m>=0:
             for j in range(n):
                 print(m_sas_los[i][j], end="  ")
             print()
-    if m==2:
-        l_sas={}
-        l_sas=lista_sasiadow(n)
-    if m==3:
-        tab_kraw=tablica_krawedzi(n)
+            
+    if m == 2:
+        l_sas = {}
+        l_sas = lista_sasiadow(n)
+        
+    if m == 3:
+        tab_kraw = tablica_krawedzi(n)
         print(tab_kraw)
-    if m==4:
-        visited=[]
-        print()
+        
+    if m == 4:
+        visited = []
         print("wyszukiwanie w głąb:")
-        DFS(visited,tab_kraw,tab_kraw[0][0])
-    if m==5: #matrix
-        h=int(input("0 - sortowanie macierzy podanej, 1 - sortowanie macierzy losowej"))
-        if h==0:
-            matrix=[]
+        DFS(visited, tab_kraw, tab_kraw[0][0])
+        
+    if m == 5:  # matrix
+        
+        h = int(input("0 - sortowanie macierzy podanej, 1 - sortowanie macierzy losowej"))
+        
+        if h == 0:
+            matrix = []
             print("podaj kolejne wiersze macierzy sąsiedztwa")
             for i in range(n):
-                m=input().split()
+                m = input().split()
                 matrix.append(m)
-            wynik=tarjan_topological_sort_matrix(matrix)
-            print("sortoanie topologiczne Tarjan:")
-            for line in wynik:
-                print(int(line)+1)
-        if h==1:
-            matrix=m_sasiedztwa_los(n)
-            wynik=tarjan_topological_sort_matrix(matrix)
+            wynik = tarjan_topological_sort_matrix(matrix)
             print("sortoanie topologiczne Tarjan:")
             for line in wynik:
                 print(int(line) + 1)
-    if m==6:
+                
+        if h == 1:
+            matrix = m_sasiedztwa_los(n)
+            wynik = tarjan_topological_sort_matrix(matrix)
+            print("sortoanie topologiczne Tarjan:")
+            for line in wynik:
+                print(int(line) + 1)
+                
+    if m == 6:
         try:
             wynik = topological_sort_tarjan_l_sas(l_sas)
             print("sortowanie topologiczne Tarjan:")
             for line in wynik:
                 print(line)
+                
         except NameError:
-            l_sas={}
+            l_sas = {}
             print("podaj listę sąsiadów:")
             for i in range(n):
-                m=int(input("podaj wierzchołek: "))
-                s=[]
+                m = int(input("podaj wierzchołek: "))
+                s = []
                 print("podaj sąsiadów wierzchołka: ")
-                s=input().split()
-                l_sas[m]=s
+                s = input().split()
+                l_sas[m] = s
+            wynik = topological_sort_tarjan_l_sas(l_sas)
+            print("sortowanie topologiczne Tarjan:")
+            for line in wynik:
+                print(line)
 
-        wynik=topological_sort_tarjan_l_sas(l_sas)
-        print("sortowanie topologiczne Tarjan:")
-        for line in wynik:
-            print(line)
-    if m==7:
+    if m == 7:
         wynik = tarjan_topological_sort_edges(tab_kraw)
         print("sortowanie topologiczne metodą Tarjana:")
         for line in wynik:
             print(line)
-    m=int(input('podaj dalsze działanie:'))
+            
+    m = int(input('podaj dalsze działanie:'))
 
