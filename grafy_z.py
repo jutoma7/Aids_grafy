@@ -167,6 +167,7 @@ print("4 - przeszukiwanie w głąb")
 print("5 - sortwanie topologiczne metodą Tarjana - macierz sąsiedztwa")
 print("6 - sortowanie topologiczne metodą Tarjana - lista sąsiadów")
 print("7 - sortwanie topologiczne metodą Tarjana - tablica krawędzi")
+print("8 - sortowanie topologiczne metodą Kahna - tablica krawędzi")
 print("-1 - koniec")
 m = int(input("podaj, które z powyższych działań chcesz wykonać:"))
 
