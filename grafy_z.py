@@ -133,28 +133,50 @@ def tarjan_topological_sort_edges(edge_list):
             dfs(node)
     return stack[::-1]
 
-def Kahn_topological_tab_kraw(tab_in):
 
-    def tablica_in(n): #potrzebna do sortowania topologicznego, odwrócenie listy sąsiadów
-    tab_in={}
+def in_degree_tab_kraw(n):  # tablica in degree od tablicy krawedzi do kahna
+    tab_in = {}
+
     for i in range(n):
-        tab_in[i+1]=[]
+        tab_in[i + 1] = []
     for line in tab_kraw:
         tab_in[line[1]].append(line[0])
     return tab_in
-    
-    tab_in=tablica_in(n)
-    
-    if not tab_in:
+
+def in_degree_lista_sasiadow(l_sas): # tablica in degree od listy sasiadow do kahna
+    in_degree = {}
+    for i in range(1, n + 1):
+        in_degree[i] = []
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            if j in l_sas[str(i)]:
+                in_degree[j].append(int(i))
+    return in_degree
+
+def in_degree_matrix(mat): # tablica in degree od macierzy sasiadow do kahna
+    in_degree={}
+    for i in range(len(mat)):
+        in_degree[i+1]=[]
+    for i in range(len(mat)):
+        for j in range(len(mat)):
+            if mat[i][j]=='1':
+                in_degree[j + 1].append(i + 1)
+    return in_degree
+
+def kahns_topological_sort_lista_sasiadow(in_degree): #ogólna funkcja do sortowania Kahna
+    kontrolna=[]
+    if not in_degree:
         return
-    for item in list(tab_in.keys()):
-        if tab_in[item] == []:
+    for item in list(in_degree.keys()):
+        if in_degree[item] == []:
             print(item)
-            del tab_in[item]
-            for key, value in tab_in.items():
+            kontrolna.append(item)
+            del in_degree[item]
+            for key, value in in_degree.items():
                 if item in value:
                     value.remove(item)
-    Kahn_topological_tab_kraw(tab_in)
+    kahns_topological_sort_lista_sasiadow(in_degree)
+
 
 
 
@@ -253,10 +275,20 @@ while m >= 0:
                 print(line)
 
     if m == 8:
-        wynik=Kahn_topological_tab_kraw(tab_in)
         print("sortowanie topologiczne Kahn:")
-        for line in wynik:
-                print(line)
+        print(kahns_topological_sort_lista_sasiadow(in_degree_tab_kraw(n)))
+        
+    if m == 9:
+            '''if len(kontrolna) != len(graph):
+                return None
+            else:
+                return kontrolna'''
+
+        print(kahns_topological_sort_lista_sasiadow(in_degree_lista_sasiadow(l_sas)))
+
+    if m == 10:
+        print(kahns_topological_sort_lista_sasiadow(in_degree_matrix(m_sas)))
+
             
     m = int(input('podaj dalsze działanie:'))
 
