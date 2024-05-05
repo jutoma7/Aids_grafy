@@ -133,6 +133,30 @@ def tarjan_topological_sort_edges(edge_list):
             dfs(node)
     return stack[::-1]
 
+def Kahn_topological_tab_kraw(tab_in):
+
+    def tablica_in(n): #potrzebna do sortowania topologicznego, odwrócenie listy sąsiadów
+    tab_in={}
+    for i in range(n):
+        tab_in[i+1]=[]
+    for line in tab_kraw:
+        tab_in[line[1]].append(line[0])
+    return tab_in
+    
+    tab_in=tablica_in(n)
+    
+    if not tab_in:
+        return
+    for item in list(tab_in.keys()):
+        if tab_in[item] == []:
+            print(item)
+            del tab_in[item]
+            for key, value in tab_in.items():
+                if item in value:
+                    value.remove(item)
+    Kahn_topological_tab_kraw(tab_in)
+
+
 
 n = int(input("podaj liczbę wierzchołków grafu: "))
 print("0 - macierz sąsiedztwa")
@@ -225,7 +249,13 @@ while m >= 0:
         wynik = tarjan_topological_sort_edges(tab_kraw)
         print("sortowanie topologiczne metodą Tarjana:")
         for line in wynik:
-            print(line)
+                print(line)
+
+    if m == 8:
+        wynik=Kahn_topological_tab_kraw(tab_in)
+        print("sortowanie topologiczne Kahn:")
+        for line in wynik:
+                print(line)
             
     m = int(input('podaj dalsze działanie:'))
 
