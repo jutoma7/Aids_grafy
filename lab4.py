@@ -31,6 +31,18 @@ def macierz_nasycona(n, nasyc):
 
     return matrix
 
+def DFS(visited, tab_kraw, current,tablica):
+    if current not in visited:
+        visited.append(current)
+        print(current)
+    for line in tab_kraw:
+        if line[0] == current and line[1] not in visited:
+            DFS(visited, tab_kraw, line[1],tablica)
+        if line[0] not in visited:
+            DFS(visited, tab_kraw, line[0],tablica)
+    tablica.append(current)
+
+
 n = int(input())
 m = int(input())
 matrix = macierz_nasycona(n,m)
@@ -38,4 +50,13 @@ for i in range(n):
     print(matrix[i])
 
 t_kraw = tablica_krawedzi(n, matrix)
+
+
+DFS(visited,tab_kraw,tab_kraw[0][0],end)
+
+print(end)
+if len(end)!=len(tab_kraw):
+    print('brak cyklu Eulera')
+else:
+    print('istnieje cykl eulera')
 
