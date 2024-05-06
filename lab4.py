@@ -43,13 +43,12 @@ def DFS(visited, tab_kraw, current,tablica):
     tablica.append(current)
 
 
-n = int(input("podaj wymiary maicerzy"))
-m = int(input("podaj nasycenie macierzy"))
-matrix = macierz_nasycona(n,m)
-for i in range(n):
-    print(matrix[i])
 
+n = int(input('Poddaj ilość wierzchołków: ')) # ilość wierzchołków
+m = int(input('Podaj nasycenie gdzie należy ono do przedziału liczb naturalnych [0;100]: ')) # nasycenie [0;100], N
+matrix = macierz_nasycona(n,m)
 t_kraw = tablica_krawedzi(n, matrix)
+
 
 visited=[]
 end=[]
