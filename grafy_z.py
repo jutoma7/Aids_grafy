@@ -177,6 +177,36 @@ def kahns_topological_sort_lista_sasiadow(in_degree): #ogólna funkcja do sortow
                     value.remove(item)
     kahns_topological_sort_lista_sasiadow(in_degree)
 
+def topological_sort_kahn(adj_matrix):
+    num_vertices = len(adj_matrix)
+
+    in_degree = [0] * num_vertices
+    for i in range(num_vertices):
+        for j in range(num_vertices):
+            if adj_matrix[i][j] == 1:
+                in_degree[j] += 1
+
+    queue = deque()
+    for i in range(num_vertices):
+        if in_degree[i] == 0:
+            queue.append(i)
+
+    topological_order = []
+    while queue:
+        vertex = queue.popleft()
+        topological_order.append(vertex)
+
+        for i in range(num_vertices):
+            if adj_matrix[vertex][i] == 1:
+                in_degree[i] -= 1
+                if in_degree[i] == 0:
+                    queue.append(i)
+
+    if len(topological_order) != num_vertices:
+        print("Graf zawiera cykl!")
+        return None
+
+    return topological_order
 
 
 
@@ -278,7 +308,7 @@ while m >= 0:
 
     if m == 8:
         print("sortowanie topologiczne Kahn:")
-        print(kahns_topological_sort_lista_sasiadow(in_degree_matrix(m_sas)))
+        print(topologica_sort_Kahn(m_sas))
         
     if m == 9:
             '''if len(kontrolna) != len(graph):
