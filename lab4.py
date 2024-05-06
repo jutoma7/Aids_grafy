@@ -28,7 +28,8 @@ def macierz_nasycona(n, nasyc):
         for j in range(n):
             matrix[i].append(lista[a])
             a += 1
-
+    for i in range(n):
+        matrix[i][i] = '0'
     return matrix
 
 def DFS(visited, tab_kraw, current,tablica):
