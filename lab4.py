@@ -43,8 +43,8 @@ def DFS(visited, tab_kraw, current,tablica):
     tablica.append(current)
 
 
-n = int(input())
-m = int(input())
+n = int(input("podaj wymiary maicerzy"))
+m = int(input("podaj nasycenie macierzy"))
 matrix = macierz_nasycona(n,m)
 for i in range(n):
     print(matrix[i])
