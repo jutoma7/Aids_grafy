@@ -17,11 +17,9 @@ def macierz_nasycona(n, nasyc):
     len_list = n * n
     rest = (100 - nasyc) * len_list // 100
     nas = nasyc * len_list // 100
-    if len_list % 2 == 1:
-        lista = ['0'] * rest + ['1'] * nas + ['0']
-    else:
-        lista = ['0'] * rest + ['1'] * nas
+    lista = ['0'] * rest + ['1'] * nas 
     random.shuffle(lista)
+    lista = lista + ['0'] * 10
     a = 0
     for i in range(n):
         matrix[i] = []
