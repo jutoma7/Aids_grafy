@@ -308,7 +308,7 @@ while m >= 0:
 
     if m == 8:
         print("sortowanie topologiczne Kahn:")
-        print(topologica_sort_Kahn(m_sas))
+        print(topological_sort_kahn(m_sas))
         
     if m == 9:
             '''if len(kontrolna) != len(graph):
