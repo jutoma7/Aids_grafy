@@ -1,5 +1,5 @@
 import random
-
+from collections import deque
 
 def macierz_sasiedztwa(n):
     m_sas = []
