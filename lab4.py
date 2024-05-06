@@ -51,7 +51,8 @@ for i in range(n):
 
 t_kraw = tablica_krawedzi(n, matrix)
 
-
+visited=[]
+end=[]
 DFS(visited,tab_kraw,tab_kraw[0][0],end)
 
 print(end)
