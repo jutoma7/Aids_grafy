@@ -122,15 +122,6 @@ matrix = macierz_nasycona(n,m)
 t_kraw = tablica_krawedzi(n, matrix)
 l_sas=matrix_to_adj_list(matrix)
 
-
-#rzeczy do eulera
-ost = []
-poczatek = 0
-DFS_Euler(l_sas, poczatek, ost)
-print("Cykl Eulera:", ost[::-1])
-
-
-#hamilton
 graph = matrix
 for i in range(n):
     for j in range(n):
@@ -140,9 +131,29 @@ for i in range(n):
     for j in range(n):
         graph[i][j] = str(graph[i][j])
 
-hamilton_cycle(graph)
-
 matrix_bez_cyklu = graph
 for i in range(n):
     matrix_bez_cyklu[0][i] = '0'
     matrix_bez_cyklu[i][0] = '0'
+
+m = -1
+while (m!=0):
+    print('Proszę wpisać numer znajdujący się przy zadaniu, które chcesz aby wykonał program.')
+    print('0 : Zakończenie działania programu')
+    print('1 : Euler')
+    print('2 : Hamilton')
+    m = int(input())
+    if m == 1:
+        #rzeczy do eulera
+        ost = []
+        poczatek = 0
+        DFS_Euler(l_sas, poczatek, ost)
+        print("Cykl Eulera:", ost[::-1])
+    elif m == 2:
+        hamilton_cycle(hamiltonian_graph)
+
+
+
+
+
+
