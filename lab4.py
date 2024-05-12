@@ -85,7 +85,7 @@ def hamilton_cycle(graph):
 def has_hamiltonian_cycle(graph):
     n = len(graph)
     for i in range(n):
-        if sum(graph[i]) != 2 or graph[i][i] == 1:  # Poprawka: sprawdzenie, czy nie ma pętli
+        if sum(graph[i]) != 2 or graph[i][i] == 1:
             return False
     return True
 
