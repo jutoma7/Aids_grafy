@@ -82,7 +82,39 @@ def hamilton_cycle(graph):
     print("Cykl Hamiltona:", path)
     return True
 
+def has_hamiltonian_cycle(graph):
+    n = len(graph)
+    for i in range(n):
+        if sum(graph[i]) != 2 or graph[i][i] == 1:  # Poprawka: sprawdzenie, czy nie ma pętli
+            return False
+    return True
 
+def find_hamiltonian_cycle(graph):
+    n = len(graph)
+    visited = [False] * n
+    cycle = []
+
+    def dfs(node):
+        cycle.append(node)
+        visited[node] = True
+        for neighbor, connected in enumerate(graph[node]):
+            if connected and not visited[neighbor]:
+                dfs(neighbor)
+
+    dfs(0)
+    return cycle
+
+def convert_to_hamiltonian_cycle(graph):
+    if has_hamiltonian_cycle(graph):
+        return graph
+    else:
+        cycle = find_hamiltonian_cycle(graph)
+        for i in range(len(cycle) - 1):
+            graph[cycle[i]][cycle[i + 1]] = 1
+            graph[cycle[i + 1]][cycle[i]] = 1
+        graph[cycle[-1]][cycle[0]] = 1
+        graph[cycle[0]][cycle[-1]] = 1
+        return graph
 
 n = int(input('Poddaj ilość wierzchołków: ')) # ilość wierzchołków
 m = int(input('Podaj nasycenie gdzie należy ono do przedziału liczb naturalnych [0;100]: ')) # nasycenie [0;100], N
@@ -99,5 +131,18 @@ print("Cykl Eulera:", ost[::-1])
 
 
 #hamilton
+graph = matrix
+for i in range(n):
+    for j in range(n):
+        graph[i][j] = int(graph[i][j])
+hamiltonian_graph = convert_to_hamiltonian_cycle(graph)
+for i in range(n):
+    for j in range(n):
+        graph[i][j] = str(graph[i][j])
+
 hamilton_cycle(graph)
 
+matrix_bez_cyklu = graph
+for i in range(n):
+    matrix_bez_cyklu[0][i] = '0'
+    matrix_bez_cyklu[i][0] = '0'
