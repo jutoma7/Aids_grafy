@@ -12,22 +12,27 @@ def tablica_krawedzi(n, m_sas):
         print(f"{chr(ord('a')+i)}: {tab_kraw[i][0]}  |  {tab_kraw[i][1]}")
     return tab_kraw
 
-def macierz_nasycona(n, nasyc):
+def macierz_nasycona(n, nas):
     matrix = ['0'] * n
-    len_list = n * n
-    rest = (100 - nasyc) * len_list // 100
-    nas = nasyc * len_list // 100
-    lista = ['0'] * rest + ['1'] * nas 
+    len_list = (n * n - n) // 2
+    half = len_list * nas // 100
+    other_half = len_list - half
+    if len_list % 2 == 1:
+        lista = ['0'] * other_half + ['1'] * half + ['0']
+    else:
+        lista = ['0'] * other_half + ['1'] * half
     random.shuffle(lista)
-    lista = lista + ['0'] * 10
     a = 0
     for i in range(n):
-        matrix[i] = []
-        for j in range(n):
+        matrix[i] = ['0'] * (i + 1)
+        for j in range(n - i - 1):
             matrix[i].append(lista[a])
             a += 1
     for i in range(n):
-        matrix[i][i] = '0'
+        for j in range(n):
+            if matrix[i][j] == '1':
+                matrix[j][i] = '1'
+
     return matrix
     
 def matrix_to_adj_list(matrix):
