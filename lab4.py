@@ -51,36 +51,6 @@ def DFS_Euler(graph, v, stack):
         DFS_Euler(graph, u, stack)
     stack.append(v)
 
-#hamilton 
-def is_valid(v, pos, path, graph):
-    if v not in graph[path[pos - 1]]: # Sprawdź, czy można dodać wierzchołek v do ścieżki
-        return False
-    if v in path:   # Sprawdź, czy wierzchołek v nie jest już w ścieżce
-        return False
-    return True
-
-def hamilton_cycle_util(graph, path, pos):
-    if pos == len(graph): # Warunek końca rekurencji: jeśli wszystkie wierzchołki są w ścieżce
-        if path[pos - 1] in graph[path[0]]: # Sprawdź, czy istnieje krawędź między ostatnim wierzchołkiem a pierwszym
-            return True
-        else:
-            return False
-    for v in graph.keys(): # Testuj dla każdego wierzchołka
-        if is_valid(v, pos, path, graph):
-            path[pos] = v
-            if hamilton_cycle_util(graph, path, pos + 1): # Rekurencyjnie wywołaj się dla następnego wierzchołka
-                return True
-            path[pos] = -1 # Jeśli dodanie wierzchołka v nie prowadzi do rozwiązania, usuń go z ścieżki
-    return False
-
-def hamilton_cycle(graph):
-    path = [-1] * len(graph)  # Inicjalizuj ścieżkę jako pustą listę
-    path[0] = next(iter(graph.keys())) # Wybierz pierwszy wierzchołek jako startowy
-    if not hamilton_cycle_util(graph, path, 1): # Rozpocznij rekurencję od drugiego wierzchołka
-        print("Nie istnieje cykl Hamiltona w tym grafie")
-        return False
-    print("Cykl Hamiltona:", path)
-    return True
 
 def has_hamiltonian_cycle(graph):
     n = len(graph)
@@ -116,6 +86,25 @@ def convert_to_hamiltonian_cycle(graph):
         graph[cycle[0]][cycle[-1]] = 1
         return graph
 
+def Hamiltonian_path(adj, N):
+    dp = [[False for i in range(1 << N)]
+          for j in range(N)]
+    for i in range(N):
+        dp[i][1 << i] = True
+    for i in range(1 << N):
+        for j in range(N):
+            if ((i & (1 << j)) != 0):
+                for k in range(N):
+                    if ((i & (1 << k)) != 0 and
+                            adj[k][j] == 1 and
+                            j != k and
+                            dp[k][i ^ (1 << j)]):
+                        dp[j][i] = True
+                        break
+    for i in range(N):
+        if (dp[i][(1 << N) - 1]):
+            return True
+            
 n = int(input('Poddaj ilość wierzchołków: ')) # ilość wierzchołków
 m = int(input('Podaj nasycenie gdzie należy ono do przedziału liczb naturalnych [0;100]: ')) # nasycenie [0;100], N
 matrix = macierz_nasycona(n,m)
@@ -150,7 +139,8 @@ while (m!=0):
         DFS_Euler(l_sas, poczatek, ost)
         print("Cykl Eulera:", ost[::-1])
     elif m == 2:
-        hamilton_cycle(hamiltonian_graph)
+        Hamiltonian_path(hamiltonian_graph,n)
+        
 
 
 
