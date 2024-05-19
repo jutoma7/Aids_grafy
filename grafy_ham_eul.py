@@ -161,7 +161,7 @@ def main():
             DFS_Euler(l_sas, poczatek, ost)
             print("Cykl Eulera:", ost[::-1])
         elif m == 2:
-            if Hamiltonian_path(matrix, num_nodes):
+            if Hamiltonian_path(graph.adj_matrix, num_nodes):
                 print('Graf posiada Hamiltona')
             else:
                 print('Graf nie posiada Hamiltona')
