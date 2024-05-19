@@ -131,9 +131,7 @@ def main():
 
     graph = Graph(num_nodes)
 
-    cycle = create_hamiltonian_cycle(graph)
-    print("Cykl Hamiltona:", cycle)
-
+    create_hamiltonian_cycle(graph)
     add_edges_to_saturate(graph, saturation)
     make_degrees_even(graph)
 
