@@ -106,24 +106,43 @@ def matrix_to_adj_list(matrix):
                 adj_list[i].append(j)
     return adj_list
 
-def Hamiltonian_path(adj, N):
-    dp = [[False for i in range(1 << N)]
-          for j in range(N)]
-    for i in range(N):
-        dp[i][1 << i] = True
-    for i in range(1 << N):
-        for j in range(N):
-            if ((i & (1 << j)) != 0):
-                for k in range(N):
-                    if ((i & (1 << k)) != 0 and
-                            adj[k][j] == 1 and
-                            j != k and
-                            dp[k][i ^ (1 << j)]):
-                        dp[j][i] = True
-                        break
-    for i in range(N):
-        if (dp[i][(1 << N) - 1]):
+
+def is_safe(v, pos, path, graph):
+    if graph[path[pos - 1]][v] == 0:
+        return False
+    if v in path:
+        return False
+    return True
+def ham_cycle_util(graph, path, pos,num):
+    if pos == num:
+        if graph[path[pos - 1]][path[0]] == 1:
             return True
+        else:
+            return False
+    for v in range(1, num):
+        if is_safe(v, pos, path, graph):
+            path[pos] = v
+            if ham_cycle_util(graph, path, pos + 1,num):
+                return True
+            path[pos] = -1
+    return False
+def print_solution(path):
+    print("Hamiltonian Cycle found:")
+    for vertex in path:
+        print(vertex, end=" ")
+    print(path[0], "\n")
+def ham_cycle(graph,num):
+    N = num
+    path = [-1] * N
+    path[0] = 0
+
+    if not ham_cycle_util(graph, path, 1,N):
+        print("No Hamiltonian Cycle found")
+        return False
+
+    print_solution(path)
+    return True
+
 
 def main():
     num_nodes = int(input("Podaj liczbę wierzchołków: "))
@@ -161,10 +180,8 @@ def main():
             DFS_Euler(l_sas, poczatek, ost)
             print("Cykl Eulera:", ost[::-1])
         elif m == 2:
-            if Hamiltonian_path(graph.adj_matrix, num_nodes):
-                print('Graf posiada Hamiltona')
-            else:
-                print('Graf nie posiada Hamiltona')
+            ham_cycle(graph.adj_matrix,num_nodes)
+
         elif m == 3:
             l = int(input('1 - wpisanie z klawiatury, 2 - wygenerowanie nowego grafu, 3 - macierz z/bez cyklu, 4 - zostań przy obecnym grafie ; '))
             if l == 1:
